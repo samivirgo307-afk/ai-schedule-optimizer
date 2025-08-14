@@ -9,17 +9,34 @@
     <!-- Google AdSense - Auto Ads Only -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9780946349296975" crossorigin="anonymous"></script>
     
-    <!-- Google Analytics 4 - Replace with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Google Analytics 4 - LIVE -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JB570RTMHQ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
         
-        // Enhanced ecommerce tracking
-        gtag('config', 'G-XXXXXXXXXX', {
-            custom_map: {'custom_parameter_1': 'schedule_type'}
+        // Enhanced ecommerce and custom events
+        gtag('config', 'G-JB570RTMHQ', {
+            // Enhanced measurement
+            enhanced_measurement_settings: {
+                page_changes: true,
+                scrolls: true,
+                outbound_clicks: true,
+                file_downloads: true
+            },
+            // Custom dimensions
+            custom_map: {
+                'custom_parameter_1': 'work_style',
+                'custom_parameter_2': 'priority_type', 
+                'custom_parameter_3': 'task_count'
+            }
+        });
+
+        // Track page load
+        gtag('event', 'page_view', {
+            'page_title': 'AI Schedule Optimizer',
+            'page_location': window.location.href
         });
     </script>
 
@@ -266,6 +283,17 @@
             <p>Transform chaos into productivity. Get your perfect daily schedule in seconds.</p>
         </div>
 
+        <!-- Test Ad - Manual -->
+        <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 10px;">
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-9780946349296975"
+                 data-ad-slot="7166298635"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <!-- Auto Ads will place ads here automatically -->
 
         <div class="main-card">
@@ -373,6 +401,15 @@
             const tasks = document.getElementById('tasks').value.trim();
             if (!tasks) {
                 alert('Please enter some tasks first!');
+                
+                // Track failed attempts
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'schedule_attempt_failed', {
+                        'event_category': 'User Interaction',
+                        'event_label': 'No tasks entered',
+                        'value': 0
+                    });
+                }
                 return;
             }
 
@@ -390,12 +427,30 @@
             document.getElementById('results').style.display = 'block';
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 
-            // Track event (placeholder for Google Analytics)
+            // Enhanced Analytics Tracking
             if (typeof gtag !== 'undefined') {
+                // Main conversion event
                 gtag('event', 'schedule_generated', {
+                    'event_category': 'Conversion',
+                    'event_label': 'Schedule Creation Success',
                     'tasks_count': taskList.length,
                     'work_style': workStyle,
-                    'priority': priority
+                    'priority': priority,
+                    'time_span_hours': Math.round((timeToMinutes(endTime) - timeToMinutes(startTime)) / 60),
+                    'value': taskList.length
+                });
+
+                // Custom event for business intelligence
+                gtag('event', 'user_preferences', {
+                    'event_category': 'User Behavior',
+                    'custom_parameter_1': workStyle,
+                    'custom_parameter_2': priority,
+                    'custom_parameter_3': taskList.length
+                });
+
+                // Engagement event
+                gtag('event', 'engagement', {
+                    'engagement_time_msec': 10000 // User spent time filling form
                 });
             }
         }
@@ -517,6 +572,15 @@
             const email = document.getElementById('emailInput').value;
             if (!email || !email.includes('@')) {
                 alert('Please enter a valid email address');
+                
+                // Track failed email attempts
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'email_signup_failed', {
+                        'event_category': 'Lead Generation',
+                        'event_label': 'Invalid email format',
+                        'value': 0
+                    });
+                }
                 return;
             }
             
@@ -546,14 +610,106 @@
                 document.getElementById('emailInput').value = '';
             });
 
-            // Track signup
+            // Enhanced Email Signup Tracking
             if (typeof gtag !== 'undefined') {
+                // Main conversion event
                 gtag('event', 'email_signup', {
+                    'event_category': 'Lead Generation',
+                    'event_label': 'Productivity Tips Signup',
                     'method': 'productivity_tips',
-                    'value': 1
+                    'value': 1,
+                    'currency': 'USD'
+                });
+
+                // Lead generation event
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Lead Generation',
+                    'value': 5.00, // Estimated value of email lead
+                    'currency': 'USD'
+                });
+
+                // Custom event for funnel tracking
+                gtag('event', 'newsletter_subscription', {
+                    'event_category': 'Email Marketing',
+                    'signup_source': 'main_page',
+                    'user_type': 'organic'
                 });
             }
         }
+
+        // Enhanced Analytics - Track user interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track form interactions
+            const taskTextarea = document.getElementById('tasks');
+            const startTimeInput = document.getElementById('startTime');
+            const workStyleSelect = document.getElementById('workStyle');
+            
+            taskTextarea.addEventListener('focus', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_start', {
+                        'event_category': 'User Engagement',
+                        'event_label': 'Tasks input focused'
+                    });
+                }
+            });
+
+            workStyleSelect.addEventListener('change', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'preference_selected', {
+                        'event_category': 'User Behavior',
+                        'event_label': 'Work style changed',
+                        'work_style': this.value
+                    });
+                }
+            });
+
+            // Track affiliate clicks
+            document.querySelectorAll('a[href*="notion"], a[href*="todoist"], a[href*="rescuetime"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    const tool = this.href.includes('notion') ? 'Notion' : 
+                                this.href.includes('todoist') ? 'Todoist' : 'RescueTime';
+                    
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'affiliate_click', {
+                            'event_category': 'Monetization',
+                            'event_label': tool + ' affiliate click',
+                            'tool_name': tool,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+
+            // Track scroll depth
+            let maxScroll = 0;
+            window.addEventListener('scroll', function() {
+                const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+                if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+                    maxScroll = scrollPercent;
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            'event_category': 'User Engagement',
+                            'event_label': scrollPercent + '% scrolled',
+                            'scroll_depth': scrollPercent
+                        });
+                    }
+                }
+            });
+
+            // Track time on page
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'session_duration', {
+                        'event_category': 'User Engagement',
+                        'event_label': 'Time on page',
+                        'value': timeOnPage,
+                        'time_on_page_seconds': timeOnPage
+                    });
+                }
+            });
+        });
 
         // Load sample data on page load
         window.addEventListener('load', function() {
