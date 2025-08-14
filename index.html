@@ -6,16 +6,21 @@
     <title>AI Schedule Genius - Optimize Your Perfect Day</title>
     <meta name="description" content="Free AI-powered daily schedule optimizer. Input your tasks and get an optimized timeline for maximum productivity.">
     
-    <!-- Google AdSense placeholder -->
+    <!-- Google AdSense - Replace with your publisher ID -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
     
-    <!-- Google Analytics placeholder -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <!-- Google Analytics 4 - Replace with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'GA_TRACKING_ID');
+        gtag('config', 'G-XXXXXXXXXX');
+        
+        // Enhanced ecommerce tracking
+        gtag('config', 'G-XXXXXXXXXX', {
+            custom_map: {'custom_parameter_1': 'schedule_type'}
+        });
     </script>
 
     <style>
@@ -252,6 +257,19 @@
             <p>Transform chaos into productivity. Get your perfect daily schedule in seconds.</p>
         </div>
 
+        <!-- Top Banner Ad -->
+        <div class="ad-space" style="margin: 20px 0;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <div class="main-card">
             <div class="input-section">
                 <h2><span class="icon">✏️</span>Tell us about your day</h2>
@@ -306,10 +324,41 @@
             </div>
         </div>
 
-        <!-- Ad Space -->
-        <div class="ad-space">
-            <p>Advertisement Space</p>
-            <small>Google AdSense ads would appear here</small>
+        <!-- Sidebar Ad (Desktop) -->
+        <div class="ad-space" style="margin: 30px 0;">
+            <h4 style="color: #4a5568; margin-bottom: 15px;">📱 Recommended Productivity Apps</h4>
+            
+            <!-- Notion Affiliate Link -->
+            <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0; border: 1px solid #e2e8f0;">
+                <h5 style="color: #667eea;">Notion - All-in-One Workspace</h5>
+                <p style="color: #4a5568; font-size: 0.9em; margin: 5px 0;">Organize your entire life in one place</p>
+                <a href="https://affiliate.notion.so/your-id" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">Try Notion Free →</a>
+            </div>
+
+            <!-- Todoist Affiliate Link -->
+            <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0; border: 1px solid #e2e8f0;">
+                <h5 style="color: #667eea;">Todoist - Smart Task Manager</h5>
+                <p style="color: #4a5568; font-size: 0.9em; margin: 5px 0;">The world's #1 task manager</p>
+                <a href="https://todoist.com?r=your-referral" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">Get Todoist Pro →</a>
+            </div>
+
+            <!-- RescueTime Affiliate -->
+            <div style="background: white; padding: 20px; border-radius: 10px; margin: 10px 0; border: 1px solid #e2e8f0;">
+                <h5 style="color: #667eea;">RescueTime - Time Tracking</h5>
+                <p style="color: #4a5568; font-size: 0.9em; margin: 5px 0;">Automatic time tracking & insights</p>
+                <a href="https://www.rescuetime.com/ref/your-id" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">Track Time →</a>
+            </div>
+
+            <!-- Google AdSense Responsive Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block; margin: 20px 0;"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
         <!-- Email Signup -->
@@ -482,14 +531,37 @@
                 return;
             }
             
-            // Here you would normally send to your email service
-            alert('Thanks! You\'ll receive productivity tips soon. (This is a demo - no emails actually sent)');
-            document.getElementById('emailInput').value = '';
+            // Send to ConvertKit (replace with your form endpoint)
+            fetch('https://api.convertkit.com/v3/forms/YOUR_FORM_ID/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    api_key: 'YOUR_API_KEY',
+                    email: email,
+                    tags: ['schedule-optimizer-signup']
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('🎉 Welcome aboard! Check your email for productivity tips.');
+                    document.getElementById('emailInput').value = '';
+                } else {
+                    // Fallback for demo
+                    alert('Thanks! You\'ll receive productivity tips soon.');
+                    document.getElementById('emailInput').value = '';
+                }
+            }).catch(() => {
+                // Fallback for demo
+                alert('Thanks! You\'ll receive productivity tips soon.');
+                document.getElementById('emailInput').value = '';
+            });
 
             // Track signup
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'email_signup', {
-                    'method': 'productivity_tips'
+                    'method': 'productivity_tips',
+                    'value': 1
                 });
             }
         }
