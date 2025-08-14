@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Schedule Genius - Optimize Your Perfect Day</title>
+    <meta name="description" content="Free AI-powered daily schedule optimizer. Input your tasks and get an optimized timeline for maximum productivity.">
+    
+    <!-- Google AdSense placeholder -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
+    <!-- Google Analytics placeholder -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_TRACKING_ID');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-section h2 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .optimize-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .optimize-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .optimize-btn:active {
+            transform: translateY(0);
+        }
+
+        .results-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .schedule-item {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 0 10px 10px 0;
+            transition: background 0.2s;
+        }
+
+        .schedule-item:hover {
+            background: #edf2f7;
+        }
+
+        .schedule-time {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .schedule-task {
+            margin-top: 5px;
+            color: #4a5568;
+        }
+
+        .schedule-tip {
+            background: #e6fffa;
+            border: 1px solid #38b2ac;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .schedule-tip h4 {
+            color: #2c7a7b;
+            margin-bottom: 8px;
+        }
+
+        .schedule-tip p {
+            color: #285e61;
+            font-size: 0.9em;
+        }
+
+        .ad-space {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 10px;
+            color: #718096;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 40px;
+        }
+
+        .email-signup {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .email-signup h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .email-signup input {
+            display: inline-block;
+            width: 250px;
+            margin-right: 10px;
+        }
+
+        .email-signup button {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .main-card { padding: 20px; }
+            .time-inputs { grid-template-columns: 1fr; }
+            .email-signup input { width: 100%; margin-bottom: 10px; margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Schedule Genius</h1>
+            <p>Transform chaos into productivity. Get your perfect daily schedule in seconds.</p>
+        </div>
+
+        <div class="main-card">
+            <div class="input-section">
+                <h2><span class="icon">✏️</span>Tell us about your day</h2>
+                
+                <div class="form-group">
+                    <label for="tasks">What tasks do you need to complete today? (One per line)</label>
+                    <textarea id="tasks" placeholder="Example:&#10;Respond to emails&#10;Write project proposal&#10;Team meeting&#10;Gym workout&#10;Grocery shopping"></textarea>
+                </div>
+
+                <div class="time-inputs">
+                    <div class="form-group">
+                        <label for="startTime">Day starts at:</label>
+                        <input type="time" id="startTime" value="07:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">Day ends at:</label>
+                        <input type="time" id="endTime" value="22:00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="workStyle">Your work style:</label>
+                    <select id="workStyle">
+                        <option value="focused">Deep focus blocks (2+ hours)</option>
+                        <option value="mixed">Balanced mix</option>
+                        <option value="quick">Quick bursts (30-60 min)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority mode:</label>
+                    <select id="priority">
+                        <option value="important">Most important tasks first</option>
+                        <option value="energy">Match energy levels</option>
+                        <option value="quick">Quick wins first</option>
+                    </select>
+                </div>
+
+                <button class="optimize-btn" onclick="generateSchedule()">
+                    🤖 Optimize My Day
+                </button>
+            </div>
+
+            <div class="results-section" id="results">
+                <h2><span class="icon">📅</span>Your Optimized Schedule</h2>
+                <div id="scheduleOutput"></div>
+                
+                <div class="schedule-tip">
+                    <h4>💡 Pro Tip</h4>
+                    <p id="proTip">Your personalized productivity tip will appear here!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Space -->
+        <div class="ad-space">
+            <p>Advertisement Space</p>
+            <small>Google AdSense ads would appear here</small>
+        </div>
+
+        <!-- Email Signup -->
+        <div class="email-signup">
+            <h3>Get Daily Productivity Tips</h3>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 15px;">Join 1000+ people getting free productivity hacks</p>
+            <input type="email" placeholder="Enter your email" id="emailInput">
+            <button onclick="signupEmail()">Get Tips</button>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for productivity enthusiasts | Share this tool with friends!</p>
+            <p style="margin-top: 10px;">
+                <a href="#" style="color: rgba(255,255,255,0.8); margin: 0 10px;">Privacy</a>
+                <a href="#" style="color: rgba(255,255,255,0.8); margin: 0 10px;">Contact</a>
+                <a href="#" style="color: rgba(255,255,255,0.8); margin: 0 10px;">More Tools</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function generateSchedule() {
+            const tasks = document.getElementById('tasks').value.trim();
+            if (!tasks) {
+                alert('Please enter some tasks first!');
+                return;
+            }
+
+            const taskList = tasks.split('\n').filter(task => task.trim());
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const workStyle = document.getElementById('workStyle').value;
+            const priority = document.getElementById('priority').value;
+
+            // Simple AI-like scheduling logic
+            const schedule = createOptimizedSchedule(taskList, startTime, endTime, workStyle, priority);
+            displaySchedule(schedule);
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+            // Track event (placeholder for Google Analytics)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'schedule_generated', {
+                    'tasks_count': taskList.length,
+                    'work_style': workStyle,
+                    'priority': priority
+                });
+            }
+        }
+
+        function createOptimizedSchedule(tasks, startTime, endTime, workStyle, priority) {
+            const start = timeToMinutes(startTime);
+            const end = timeToMinutes(endTime);
+            const totalMinutes = end - start;
+            
+            // Task duration estimates based on work style
+            const durations = {
+                'focused': [120, 90, 60, 45, 30],
+                'mixed': [90, 60, 45, 30, 30],
+                'quick': [45, 30, 30, 25, 20]
+            };
+
+            // Priority ordering
+            let orderedTasks = [...tasks];
+            if (priority === 'important') {
+                // Keep original order (assuming important tasks listed first)
+            } else if (priority === 'quick') {
+                orderedTasks.reverse(); // Smaller tasks first
+            }
+
+            const schedule = [];
+            let currentTime = start;
+            
+            // Add morning routine
+            schedule.push({
+                time: minutesToTime(currentTime),
+                task: "🌅 Morning Routine & Planning",
+                type: "routine",
+                tip: "Start with hydration and a 5-minute goal review"
+            });
+            currentTime += 30;
+
+            // Schedule tasks
+            orderedTasks.forEach((task, index) => {
+                const duration = durations[workStyle][Math.min(index, durations[workStyle].length - 1)];
+                
+                schedule.push({
+                    time: minutesToTime(currentTime),
+                    task: task,
+                    type: "work",
+                    duration: duration,
+                    tip: getTaskTip(task, duration)
+                });
+                currentTime += duration;
+
+                // Add breaks
+                if (index < orderedTasks.length - 1 && duration >= 60) {
+                    schedule.push({
+                        time: minutesToTime(currentTime),
+                        task: "☕ Break & Recharge",
+                        type: "break",
+                        tip: "Step away from your workspace, stretch or hydrate"
+                    });
+                    currentTime += 15;
+                }
+            });
+
+            // Add evening routine if time permits
+            if (currentTime < end - 30) {
+                schedule.push({
+                    time: minutesToTime(end - 30),
+                    task: "🌙 Evening Review & Tomorrow Prep",
+                    type: "routine",
+                    tip: "Reflect on wins and prepare for tomorrow's success"
+                });
+            }
+
+            return schedule;
+        }
+
+        function timeToMinutes(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        function minutesToTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+        }
+
+        function getTaskTip(task, duration) {
+            const tips = [
+                "Use the Pomodoro technique: 25 min work, 5 min break",
+                "Eliminate distractions - phone in another room!",
+                "Set a timer and focus on just this one thing",
+                "Take notes of any new ideas that come up",
+                "Reward yourself after completing this task"
+            ];
+            return tips[Math.floor(Math.random() * tips.length)];
+        }
+
+        function displaySchedule(schedule) {
+            const output = document.getElementById('scheduleOutput');
+            output.innerHTML = schedule.map(item => `
+                <div class="schedule-item">
+                    <div class="schedule-time">${item.time}</div>
+                    <div class="schedule-task">${item.task}</div>
+                    ${item.duration ? `<small style="color: #718096;">${item.duration} minutes</small>` : ''}
+                </div>
+            `).join('');
+
+            // Update pro tip
+            const proTips = [
+                "Your most challenging task is scheduled for your peak energy hours. Tackle it with full focus!",
+                "Remember to take breaks - they're scientifically proven to boost productivity by 23%.",
+                "Batch similar tasks together to maintain flow state and reduce context switching.",
+                "Keep water nearby and maintain good posture throughout your day.",
+                "If you finish early, use the extra time for learning or planning tomorrow."
+            ];
+            document.getElementById('proTip').textContent = proTips[Math.floor(Math.random() * proTips.length)];
+        }
+
+        function signupEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Here you would normally send to your email service
+            alert('Thanks! You\'ll receive productivity tips soon. (This is a demo - no emails actually sent)');
+            document.getElementById('emailInput').value = '';
+
+            // Track signup
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'email_signup', {
+                    'method': 'productivity_tips'
+                });
+            }
+        }
+
+        // Load sample data on page load
+        window.addEventListener('load', function() {
+            const sampleTasks = `Respond to emails
+Write project proposal
+Team meeting
+Gym workout
+Plan weekend trip`;
+            document.getElementById('tasks').value = sampleTasks;
+        });
+    </script>
+</body>
+</html>
